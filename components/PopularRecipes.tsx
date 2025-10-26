@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState, useRef } from "react";
 import RecipeCard from "./reusable/RecipeCard";
 import Categories from "./reusable/Categories";
 
@@ -11,6 +12,45 @@ interface Recipe {
 }
 
 const PopularRecipes: React.FC = () => {
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!sliderRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !sliderRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 1; // adjust scroll speed
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const onMouseUpOrLeave = () => setIsDragging(false);
+
+  // Touch events for mobile
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!sliderRef.current) return;
+    setIsDragging(true);
+    setStartX(e.touches[0].pageX - sliderRef.current.offsetLeft);
+    setScrollLeft(sliderRef.current.scrollLeft);
+  };
+
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging || !sliderRef.current) return;
+    const x = e.touches[0].pageX - sliderRef.current.offsetLeft;
+    const walk = (x - startX) * 1; // adjust scroll speed
+    sliderRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const onTouchEnd = () => setIsDragging(false);
+
   const recipes: Recipe[] = [
     {
       id: 1,
@@ -58,26 +98,41 @@ const PopularRecipes: React.FC = () => {
 
       <Categories />
 
-      <div className="w-full py-2 mt-5 flex gap-5">
-        <div className="w-1/4">
-          <div className="w-full h-72 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-xl font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light">By Sadika Inamdar</h1>
+      <div
+        ref={sliderRef}
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUpOrLeave}
+        onMouseLeave={onMouseUpOrLeave}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+        className="w-full py-2 mt-5 flex gap-5 overflow-x-auto scrollbar-hide"
+      >
+        <div className="w-1/4 shrink-0">
+          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
+          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
+          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
         </div>
-        <div className="w-1/4">
-          <div className="w-full h-72 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-xl font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light">By Sadika Inamdar</h1>
+        <div className="w-1/4 shrink-0">
+          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
+          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
+          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
         </div>
-        <div className="w-1/4">
-          <div className="w-full h-72 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-xl font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light">By Sadika Inamdar</h1>
+        <div className="w-1/4 shrink-0">
+          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
+          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
+          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
         </div>
-        <div className="w-1/4">
-          <div className="w-full h-72 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-xl font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light">By Sadika Inamdar</h1>
+        <div className="w-1/4 shrink-0">
+          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
+          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
+          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
+        </div>
+        <div className="w-1/4 shrink-0">
+          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
+          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
+          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
         </div>
       </div>
     </div>
