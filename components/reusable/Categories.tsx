@@ -11,9 +11,11 @@ interface Category {
 const Categories = ({
   selectedCategory,
   setSelectedCategory,
+  type,
 }: {
-  selectedCategory: string | null;
-  setSelectedCategory: (categoryName: string) => void;
+  selectedCategory: string;
+  setSelectedCategory: (category: { id: number; name: string } | null) => void;
+  type?: "allrecipe";
 }) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loadingCategories, setLoadingCategories] = useState(true);
@@ -46,7 +48,7 @@ const Categories = ({
     <div className="flex flex-row justify-between">
       <div className="flex items-center gap-4">
         <div
-          onClick={() => setSelectedCategory("All")}
+          onClick={() => setSelectedCategory({ id: 0, name: "All" })}
           className={`py-2 px-6 rounded-full text-sm cursor-pointer ${
             selectedCategory === "All"
               ? "bg-[#CE2425] text-white"
@@ -59,7 +61,7 @@ const Categories = ({
         {categories.map((category) => (
           <div
             key={category.id}
-            onClick={() => setSelectedCategory(category.name)}
+            onClick={() => setSelectedCategory(category)}
             className={`py-2 px-6 rounded-full text-sm cursor-pointer ${
               selectedCategory === category.name
                 ? "bg-[#CE2425] text-white"
@@ -70,7 +72,9 @@ const Categories = ({
           </div>
         ))}
       </div>
-      <button className="hover:underline cursor-pointer">View All</button>
+      {type !== "allrecipe" && (
+        <button className="hover:underline cursor-pointer">View All</button>
+      )}
     </div>
   );
 };
