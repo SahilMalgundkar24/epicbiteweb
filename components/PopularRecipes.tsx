@@ -1,17 +1,73 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useState, useRef } from "react";
-import RecipeCard from "./reusable/RecipeCard";
+import React, { useState, useRef, useEffect } from "react";
 import Categories from "./reusable/Categories";
+import supabase from "@/lib/supabase";
 
 interface Recipe {
   id: number;
   title: string;
-  image: string;
-  author?: string;
-  time?: string;
+  image_url: string;
 }
 
 const PopularRecipes: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    "All"
+  );
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchRecipes = async (category: string) => {
+    setLoading(true);
+
+    let query = supabase
+      .from("recipes")
+      .select("id, title, image_url")
+      .limit(5);
+
+    if (category !== "All") {
+      const { data: categoryData, error: categoryError } = await supabase
+        .from("categories")
+        .select("id")
+        .eq("name", category)
+        .single();
+
+      if (categoryError) {
+        console.error("Error fetching category:", categoryError);
+        setLoading(false);
+        return;
+      }
+
+      if (categoryData) {
+        query = query.eq("category_id", categoryData.id);
+      }
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Error fetching recipes:", error);
+      setRecipes([]);
+    } else if (data) {
+      setRecipes(data);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (!selectedCategory) return;
+    // Schedule the fetch to run asynchronously so setState inside fetchRecipes
+    // does not run synchronously within the effect body (avoids cascading renders)
+    const scheduled = Promise.resolve().then(() =>
+      fetchRecipes(selectedCategory)
+    );
+    // no cleanup needed for this simple scheduling; keep return for clarity
+    return () => {
+      // If you later add cancellable fetch logic, handle cleanup here.
+      void scheduled;
+    };
+  }, [selectedCategory]);
+
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -51,36 +107,6 @@ const PopularRecipes: React.FC = () => {
 
   const onTouchEnd = () => setIsDragging(false);
 
-  const recipes: Recipe[] = [
-    {
-      id: 1,
-      title: "Spicy Vermicelli Noodles Salad",
-      image:
-        "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300&h=200&fit=crop",
-      author: "Chef Aditi",
-    },
-    {
-      id: 2,
-      title: "Classic Italian Beef Maltagliati",
-      image: "/italian-food.png",
-      author: "Chef Marco",
-    },
-    {
-      id: 3,
-      title: "Sour & Spicy Korean Kimchi",
-      image:
-        "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=300&h=200&fit=crop",
-      author: "Chef Min-Ji",
-    },
-    {
-      id: 4,
-      title: "Spicy Veg Biryani",
-      image:
-        "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=300&h=200&fit=crop",
-      author: "Chef Aarav",
-    },
-  ];
-
   const handleRecipeClick = (id: number) => {
     console.log("Recipe clicked:", id);
     // You can navigate or show modal here
@@ -96,7 +122,10 @@ const PopularRecipes: React.FC = () => {
         illo.
       </p>
 
-      <Categories />
+      <Categories
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
 
       <div
         ref={sliderRef}
@@ -109,31 +138,23 @@ const PopularRecipes: React.FC = () => {
         onTouchEnd={onTouchEnd}
         className="w-full py-2 mt-5 flex gap-5 overflow-x-auto scrollbar-hide"
       >
-        <div className="w-1/4 shrink-0">
-          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
-        </div>
-        <div className="w-1/4 shrink-0">
-          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
-        </div>
-        <div className="w-1/4 shrink-0">
-          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
-        </div>
-        <div className="w-1/4 shrink-0">
-          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
-        </div>
-        <div className="w-1/4 shrink-0">
-          <div className="w-full h-80 bg-amber-200 rounded-lg"></div>
-          <h1 className="text-lg font-semibold">Lorem Ipsum</h1>
-          <h1 className="font-light text-sm -mt-1">By Sadika Inamdar</h1>
-        </div>
+        {loading ? (
+          <p>Loading recipes...</p>
+        ) : recipes.length > 0 ? (
+          recipes.map((recipe) => (
+            <div key={recipe.id} className="w-1/4 shrink-0 select-none">
+              <img
+                src={recipe.image_url}
+                alt={recipe.title}
+                className="w-full h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
+              />
+              <h1 className="text-lg font-semibold">{recipe.title}</h1>
+              {/* You can add author info here if available */}
+            </div>
+          ))
+        ) : (
+          <p>No recipes found for this category.</p>
+        )}
       </div>
     </div>
   );

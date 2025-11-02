@@ -1,23 +1,77 @@
-import React from "react";
+"use client";
+import { useState, useEffect } from "react";
+import supabase from "@/lib/supabase";
 
-const Categories = () => {
+interface Category {
+  id: number;
+  name: string;
+  image_url: string;
+}
+
+const Categories = ({
+  selectedCategory,
+  setSelectedCategory,
+}: {
+  selectedCategory: string | null;
+  setSelectedCategory: (categoryName: string) => void;
+}) => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        console.log("Fetching categories...");
+        const { data, error } = await supabase
+          .from("categories")
+          .select("id, name, image_url");
+
+        if (error) {
+          console.error("Categories fetch failed:", error.message);
+          return;
+        }
+
+        setCategories(data);
+      } catch (error) {
+        console.error("Categories fetch failed:", error);
+      } finally {
+        setLoadingCategories(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
-    <>
+    <div className="flex flex-row justify-between">
       <div className="flex items-center gap-4">
-        <div className="py-2 px-6 bg-[#CE2425] text-white rounded-full text-sm">
-          Veg
+        <div
+          onClick={() => setSelectedCategory("All")}
+          className={`py-2 px-6 rounded-full text-sm cursor-pointer ${
+            selectedCategory === "All"
+              ? "bg-[#CE2425] text-white"
+              : "bg-[#F7F7F7] text-black"
+          }`}
+        >
+          All
         </div>
-        <div className="py-2 px-6 bg-[#F7F7F7] text-black rounded-full text-sm">
-          Non Veg
-        </div>
-        <div className="py-2 px-6 bg-[#F7F7F7] text-black rounded-full text-sm">
-          Cakes and Bakes
-        </div>
-        <div className="py-2 px-6 bg-[#F7F7F7] text-black rounded-full text-sm">
-          huehuehue
-        </div>
+        {loadingCategories && <p>Loading categories...</p>}
+        {categories.map((category) => (
+          <div
+            key={category.id}
+            onClick={() => setSelectedCategory(category.name)}
+            className={`py-2 px-6 rounded-full text-sm cursor-pointer ${
+              selectedCategory === category.name
+                ? "bg-[#CE2425] text-white"
+                : "bg-[#F7F7F7] text-black"
+            }`}
+          >
+            {category.name}
+          </div>
+        ))}
       </div>
-    </>
+      <button className="hover:underline cursor-pointer">View All</button>
+    </div>
   );
 };
 
