@@ -63,8 +63,8 @@ export default async function Page({
   const ingredients = parseMaybeArray(
     data.ingredients as unknown as string | string[]
   );
-  const instructions = parseMaybeArray(
-    data.instructions as unknown as string | string[]
+  const procedure = parseMaybeArray(
+    data.procedure as unknown as string | string[]
   );
 
   return (
@@ -142,8 +142,8 @@ export default async function Page({
               Cooking <span className="text-[#CE2425]">Instructions</span>
             </h2>
             <div className="space-y-5">
-              {instructions.length > 0 ? (
-                instructions.map((inst, idx) => (
+              {procedure.length > 0 ? (
+                procedure.map((inst, idx) => (
                   <div
                     key={idx}
                     className="flex items-center gap-7 bg-[#f7f7f7] p-6 rounded-xl"
