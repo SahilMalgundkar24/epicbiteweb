@@ -139,7 +139,17 @@ const PopularRecipes: React.FC = () => {
         className="w-full py-2 mt-5 flex gap-5 overflow-x-auto scrollbar-hide"
       >
         {loading ? (
-          <p>Loading recipes...</p>
+          <>
+            <div className="w-1/4 shrink-0 select-none">
+              
+              <div className="w-full h-80 bg-gray-200 rounded-lg">
+                </div>
+
+                <div className=" w-full h-4 bg-gray-200">
+
+                </div>
+            </div>
+          </>
         ) : recipes.length > 0 ? (
           recipes.map((recipe) => (
             <div key={recipe.id} className="w-1/4 shrink-0 select-none">
@@ -149,7 +159,7 @@ const PopularRecipes: React.FC = () => {
                 className="w-full h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
               />
               <h1 className="text-lg font-semibold">{recipe.title}</h1>
-              {/* You can add author info here if available */}
+              <h1 className="text-sm text-black/50">by Sadika Inamdar</h1>
             </div>
           ))
         ) : (
