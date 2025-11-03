@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
-
-export default page
-=======
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState, useEffect } from "react";
@@ -40,9 +29,11 @@ export default function RecipesPage() {
 
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
-    null
-  );
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>({
+    id: 0,
+    name: "All",
+  });
+
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loadingSubCategories, setLoadingSubCategories] = useState(false);
   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
@@ -118,24 +109,23 @@ export default function RecipesPage() {
     } else {
       setSubCategories([]);
     }
-    setSelectedSubCategory(null); // Reset subcategory when category changes
+    setSelectedSubCategory(null);
   }, [selectedCategory]);
 
   return (
     <div className="px-5 md:px-10 lg:px-16">
       <Navbar />
       <div className="py-8">
-        <h1 className="text-3xl md:text-5xl font-semibold mb-4">
+        <h1 className="text-3xl md:text-4xl font-medium mb-4">
           Explore Recipes
         </h1>
         <div className="flex justify-between items-center mb-8">
           <Categories
             type="allrecipe"
-            selectedCategory={selectedCategory?.name || "All"}
-            setSelectedCategory={(category) =>
-              setSelectedCategory(category as Category)
-            }
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
           />
+
           {subCategories.length > 0 && (
             <SubCategoryDropdown
               subCategories={subCategories}
@@ -151,20 +141,19 @@ export default function RecipesPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {recipes.map((recipe) => (
-              <button
+              <div
                 onClick={() => router.push(`recipes/${recipe.id}`)}
                 key={recipe.id}
-                className="bg-white rounded-lg shadow-md cursor-pointer"
+                className="w-full shrink-0 select-none cursor-pointer"
               >
                 <img
                   src={recipe.image_url}
                   alt={recipe.title}
-                  className="w-full h-48 object-cover rounded-t-lg"
+                  className="w-full h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
                 />
-                <div className="p-4">
-                  <h2 className="font-semibold text-lg">{recipe.title}</h2>
-                </div>
-              </button>
+                <h1 className="text-lg font-semibold">{recipe.title}</h1>
+                <h1 className="text-sm text-black/50">by Sadika Inamdar</h1>
+              </div>
             ))}
             {recipes.length === 0 && <p>No recipes found.</p>}
           </div>
@@ -173,4 +162,3 @@ export default function RecipesPage() {
     </div>
   );
 }
->>>>>>> ab920fdacb711897475d222000477df59e03dfc5

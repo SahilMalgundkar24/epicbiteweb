@@ -5,10 +5,35 @@ import { FiDownload } from "react-icons/fi";
 const Hero = () => {
   return (
     <>
-      <div className="w-full h-96 md:h-96 px-6 md:px-12 py-6 md:py-10 bg-[#F7F7F7] rounded-lg flex flex-col md:flex-row md:justify-between items-center relative overflow-hidden">
-        <div className="w-full md:w-1/2 flex flex-col justify-between h-full z-10">
+      <div className="w-full h-96 flex flex-col md:flex-row md:justify-between items-center relative overflow-hidden">
+        <div className="w-full md:w-1/2 flex flex-col justify-center h-full z-10">
           <div>
-            <h1 className="text-3xl md:text-5xl font-semibold leading-[1.1]">
+            <div className="w-full flex justify-start items-center mb-3">
+              <div className="px-3 py-1 border border-gray-300 rounded-full flex items-center gap-2">
+                <div className="flex -space-x-2">
+                  <img
+                    src="/images/user1.png"
+                    alt="User 1"
+                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                  />
+                  <img
+                    src="/images/user2.png"
+                    alt="User 2"
+                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                  />
+                  <img
+                    src="/images/user3.png"
+                    alt="User 3"
+                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                  />
+                </div>
+                <h1 className="text-sm font-medium text-gray-700">
+                  Loved by 8k+ users
+                </h1>
+              </div>
+            </div>
+
+            <h1 className="text-3xl md:text-6xl font-medium leading-[1.1]">
               Your Kitchen,
               <br />
               Your
@@ -18,20 +43,20 @@ const Hero = () => {
               Discover a collection of simple, flavorful recipes designed to
               make everyday cooking easy, enjoyable, and stress-free
             </h1>
-          </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-6 md:mt-0">
-            <div className="bg-black rounded-full px-3 py-2 text-white text-sm flex items-center gap-3 justify-center sm:justify-start">
-              <h1 className="ml-2">Explore Recipes</h1>
-              <div className="bg-white h-7 w-7 rounded-full flex justify-center items-center p-1">
-                <GoArrowUpRight color="#000" size="20" />
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-6">
+              <div className="bg-[#CE2425] rounded-full px-3 py-2 text-white text-sm flex items-center gap-3 justify-center sm:justify-start">
+                <h1 className="ml-2">Explore Recipes</h1>
+                <div className="bg-white h-7 w-7 rounded-full flex justify-center items-center p-1">
+                  <GoArrowUpRight color="#000" size="20" />
+                </div>
               </div>
-            </div>
 
-            <div className="bg-white border border-[#DADADA] rounded-full px-3 py-2 text-sm flex items-center gap-3 justify-center sm:justify-start">
-              <h1 className="ml-2">Get Android App</h1>
-              <div className="bg-white h-7 w-7 rounded-full flex justify-center items-center">
-                <FiDownload size="20" color="#212121" />
+              <div className="bg-white border border-[#DADADA] rounded-full px-3 py-2 text-sm flex items-center gap-3 justify-center sm:justify-start">
+                <h1 className="ml-2">Get Android App</h1>
+                <div className="bg-white h-7 w-7 rounded-full flex justify-center items-center">
+                  <FiDownload size="20" color="#212121" />
+                </div>
               </div>
             </div>
           </div>

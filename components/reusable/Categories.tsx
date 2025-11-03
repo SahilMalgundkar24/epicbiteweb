@@ -5,7 +5,6 @@ import supabase from "@/lib/supabase";
 interface Category {
   id: number;
   name: string;
-  image_url: string;
 }
 
 const Categories = ({
@@ -13,8 +12,8 @@ const Categories = ({
   setSelectedCategory,
   type,
 }: {
-  selectedCategory: string;
-  setSelectedCategory: (category: { id: number; name: string } | null) => void;
+  selectedCategory: Category | null;
+  setSelectedCategory: (category: Category | null) => void;
   type?: "allrecipe";
 }) => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -50,7 +49,7 @@ const Categories = ({
         <div
           onClick={() => setSelectedCategory({ id: 0, name: "All" })}
           className={`py-2 px-6 rounded-full text-sm cursor-pointer ${
-            selectedCategory === "All"
+            selectedCategory?.name === "All"
               ? "bg-[#CE2425] text-white"
               : "bg-[#F7F7F7] text-black"
           }`}
@@ -63,7 +62,7 @@ const Categories = ({
             key={category.id}
             onClick={() => setSelectedCategory(category)}
             className={`py-2 px-6 rounded-full text-sm cursor-pointer ${
-              selectedCategory === category.name
+              selectedCategory?.name === category.name
                 ? "bg-[#CE2425] text-white"
                 : "bg-[#F7F7F7] text-black"
             }`}

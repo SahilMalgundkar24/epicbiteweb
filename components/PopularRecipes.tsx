@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Categories from "./reusable/Categories";
 import supabase from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 interface Recipe {
   id: number;
@@ -10,10 +11,17 @@ interface Recipe {
   image_url: string;
 }
 
+interface Category {
+  id: number;
+  name: string;
+}
+
 const PopularRecipes: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    "All"
-  );
+  const router = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>({
+    id: 0,
+    name: "All",
+  });
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,16 +64,7 @@ const PopularRecipes: React.FC = () => {
 
   useEffect(() => {
     if (!selectedCategory) return;
-    // Schedule the fetch to run asynchronously so setState inside fetchRecipes
-    // does not run synchronously within the effect body (avoids cascading renders)
-    const scheduled = Promise.resolve().then(() =>
-      fetchRecipes(selectedCategory)
-    );
-    // no cleanup needed for this simple scheduling; keep return for clarity
-    return () => {
-      // If you later add cancellable fetch logic, handle cleanup here.
-      void scheduled;
-    };
+    fetchRecipes(selectedCategory.name); // pass name to fetchRecipes
   }, [selectedCategory]);
 
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -122,10 +121,11 @@ const PopularRecipes: React.FC = () => {
         illo.
       </p>
 
-      {/* <Categories
+      <Categories
+        type="allrecipe"
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
-      /> */}
+      />
 
       <div
         ref={sliderRef}
@@ -141,18 +141,18 @@ const PopularRecipes: React.FC = () => {
         {loading ? (
           <>
             <div className="w-1/4 shrink-0 select-none">
-              
-              <div className="w-full h-80 bg-gray-200 rounded-lg">
-                </div>
+              <div className="w-full h-80 bg-gray-200 rounded-lg"></div>
 
-                <div className=" w-full h-4 bg-gray-200">
-
-                </div>
+              <div className=" w-full h-4 bg-gray-200"></div>
             </div>
           </>
         ) : recipes.length > 0 ? (
           recipes.map((recipe) => (
-            <div key={recipe.id} className="w-1/4 shrink-0 select-none">
+            <div
+              onClick={() => router.push(`recipes/${recipe.id}`)}
+              key={recipe.id}
+              className="w-1/4 shrink-0 select-none cursor-pointer"
+            >
               <img
                 src={recipe.image_url}
                 alt={recipe.title}
