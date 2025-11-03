@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Categories from "./reusable/Categories";
 import supabase from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 
 interface Recipe {
   id: number;
@@ -11,11 +12,11 @@ interface Recipe {
 }
 
 const PopularRecipes: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    "All"
-  );
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
 
   const fetchRecipes = async (category: string) => {
     setLoading(true);
@@ -108,6 +109,7 @@ const PopularRecipes: React.FC = () => {
   const onTouchEnd = () => setIsDragging(false);
 
   const handleRecipeClick = (id: number) => {
+    router.push(`recipes/${id}`);
     console.log("Recipe clicked:", id);
     // You can navigate or show modal here
   };
@@ -152,15 +154,24 @@ const PopularRecipes: React.FC = () => {
           </>
         ) : recipes.length > 0 ? (
           recipes.map((recipe) => (
-            <div key={recipe.id} className="w-1/4 shrink-0 select-none">
+            <button
+              onClick={() => handleRecipeClick(recipe.id)}
+              key={recipe.id}
+              className="w-1/4 shrink-0 select-none cursor-pointer"
+            >
               <img
                 src={recipe.image_url}
                 alt={recipe.title}
                 className="w-full h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
               />
               <h1 className="text-lg font-semibold">{recipe.title}</h1>
+<<<<<<< HEAD
               <h1 className="text-sm text-black/50">by Sadika Inamdar</h1>
             </div>
+=======
+              {/* You can add author info here if available */}
+            </button>
+>>>>>>> ab920fdacb711897475d222000477df59e03dfc5
           ))
         ) : (
           <p>No recipes found for this category.</p>
