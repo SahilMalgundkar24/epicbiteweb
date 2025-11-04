@@ -6,6 +6,7 @@ import SubCategoryDropdown from "@/components/reusable/SubCategoryDropdown";
 import supabase from "@/lib/supabase";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
+import Footer from "@/components/Footer";
 
 interface Recipe {
   id: number;
@@ -115,17 +116,19 @@ export default function RecipesPage() {
   return (
     <div className="px-5 md:px-10 lg:px-16">
       <Navbar />
-      <div className="py-8">
-        <h1 className="text-3xl md:text-4xl font-medium mb-4">
+      <div className="py-3 lg:py-8">
+        <h1 className="text-2xl md:text-4xl font-medium mb-4">
           Explore Recipes
         </h1>
-        <div className="flex justify-between items-center mb-8">
+        <div className="mb-5">
           <Categories
             type="allrecipe"
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
+        </div>
 
+        <div className="mb-5">
           {subCategories.length > 0 && (
             <SubCategoryDropdown
               subCategories={subCategories}
@@ -139,7 +142,7 @@ export default function RecipesPage() {
         {loading ? (
           <p>Loading recipes...</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {recipes.map((recipe) => (
               <div
                 onClick={() => router.push(`recipes/${recipe.id}`)}
@@ -149,16 +152,22 @@ export default function RecipesPage() {
                 <img
                   src={recipe.image_url}
                   alt={recipe.title}
-                  className="w-full h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
+                  className="w-full h-64 lg:h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
                 />
-                <h1 className="text-lg font-semibold">{recipe.title}</h1>
-                <h1 className="text-sm text-black/50">by Sadika Inamdar</h1>
+                <h1 className="text-base lg:text-lg font-semibold">
+                  {recipe.title}
+                </h1>
+                <h1 className="text-xs lg:text-sm text-black/50">
+                  by Sadika Inamdar
+                </h1>
               </div>
             ))}
             {recipes.length === 0 && <p>No recipes found.</p>}
           </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 }

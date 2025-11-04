@@ -44,8 +44,8 @@ const Categories = ({
   }, []);
 
   return (
-    <div className="flex flex-row justify-between">
-      <div className="flex items-center gap-4">
+    <div className="flex flex-row justify-between overflow-x-scroll scrollbar-hide">
+      <div className="flex items-center gap-4 whitespace-nowrap">
         <div
           onClick={() => setSelectedCategory({ id: 0, name: "All" })}
           className={`py-2 px-6 rounded-full text-sm cursor-pointer ${

@@ -116,9 +116,9 @@ const PopularRecipes: React.FC = () => {
       <h2 className="text-2xl md:text-4xl font-semibold">
         Popular <span className="text-[#CE2425]">Recipes</span>
       </h2>
-      <p className="mb-5 text-gray-600">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique,
-        illo.
+      <p className="mb-5 text-gray-600 lg:text-base text-sm">
+        Browse through a collection of our most loved recipes from quick snacks
+        to traditional delicacies.
       </p>
 
       <Categories
@@ -151,12 +151,12 @@ const PopularRecipes: React.FC = () => {
             <div
               onClick={() => router.push(`recipes/${recipe.id}`)}
               key={recipe.id}
-              className="w-1/4 shrink-0 select-none cursor-pointer"
+              className="w-[90%] lg:w-1/4 shrink-0 select-none cursor-pointer"
             >
               <img
                 src={recipe.image_url}
                 alt={recipe.title}
-                className="w-full h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
+                className="w-full h-64 lg:h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
               />
               <h1 className="text-lg font-semibold">{recipe.title}</h1>
               <h1 className="text-sm text-black/50">by Sadika Inamdar</h1>

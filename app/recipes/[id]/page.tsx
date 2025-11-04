@@ -2,6 +2,7 @@
 import Navbar from "@/components/Navbar";
 import React from "react";
 import supabase from "@/lib/supabase";
+import Footer from "@/components/Footer";
 
 export default async function Page({
   params,
@@ -20,9 +21,6 @@ export default async function Page({
     );
   }
 
-  // Server-side fetch using the existing Supabase client (anonymous key).
-  // If you want to use a service role key for server-only access, create a
-  // separate server client and don't expose that key to the browser.
   const { data, error } = await supabase
     .from("recipes")
     .select("*")
@@ -69,7 +67,7 @@ export default async function Page({
 
   return (
     <>
-      <div className="px-16">
+      <div className="px-5 md:px-10 lg:px-16">
         <Navbar />
 
         <div className="relative w-full h-80 rounded-xl overflow-hidden">
@@ -84,51 +82,26 @@ export default async function Page({
           <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/70"></div>
 
           {/* Title text at bottom */}
-          <div className="absolute bottom-0 left-0 w-full px-7 py-4 text-white z-10">
-            <h3 className="text-4xl font-bold leading-tight">{title}</h3>
+          <div className="absolute bottom-0 left-0 w-full px-4 lg:px-7 py-4 text-white z-10">
+            <h3 className="text-2xl lg:text-4xl font-bold leading-tight">
+              {title}
+            </h3>
           </div>
         </div>
-        <div className="mt-7 flex gap-2">
-          <div className="flex flex-col w-5/6 justify-between ">
-            <div className="text-gray-500 ">{description}</div>
-            <div className="flex justify-between">
-              <div className="">
-                <h1 className=" font-semibold">Tags</h1>
-                <h1 className="text-[#CE2425]">
-                  {Array.isArray(data.tags) ? data.tags.join(", ") : data.tags}
-                </h1>
-              </div>
-              <div className="px-6 py-2 flex justify-center items-center bg-gray-900 text-sm text-white rounded-full">
-                Download Recipe PDF
-              </div>
-            </div>
-          </div>
-          <div className="w-1/6 h-56 bg-gray-300">
-            <div className="relative w-full h-56 rounded-xl overflow-hidden">
-              {/* Image */}
-              <img
-                src="/images/chef.png"
-                alt="chef"
-                className="w-full h-full object-cover rounded-xl overflow-hidden"
-              />
+        <div className="text-gray-500 mt-7">{description}</div>
 
-              {/* Black overlay */}
-              <div className="absolute inset-0 bg-linear-to-b from-transparent to-black/70"></div>
-
-              {/* Title text */}
-              <div className="absolute bottom-0 left-0 w-full p-4 text-white z-10">
-                <h3 className="text-lg font-semibold leading-tight">{chef}</h3>
-              </div>
-            </div>
+        <div className="mt-3 flex">
+          <div className="px-6 py-2 flex justify-center items-center bg-gray-900 text-sm text-white rounded-full">
+            Download Recipe PDF
           </div>
         </div>
 
-        <div className="mt-20 w-5/6">
+        <div className="mt-10 w-full lg:w-5/6">
           <div className="border border-gray-200 p-7 rounded-2xl">
             <h1 className="text-2xl font-semibold mb-4">Ingredients</h1>
 
             {/* Ingredients in two columns */}
-            <div className="grid grid-cols-2 gap-2 text-gray-700">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 text-gray-700">
               {ingredients.length > 0 ? (
                 ingredients.map((ing, idx) => <p key={idx}>• {ing}</p>)
               ) : (
@@ -160,6 +133,7 @@ export default async function Page({
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import PopularRecipes from "@/components/PopularRecipes";
@@ -13,6 +14,7 @@ export default function Home() {
       <Testimonial />
       <PopularRecipes />
       <Youtube />
+      <Footer />
     </div>
   );
 }
