@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 const Youtube = () => {
@@ -13,9 +14,17 @@ const Youtube = () => {
           Discover exclusive video recipes, kitchen hacks, and behind-the-scenes
           cooking moments.
           <div className="flex w-full justify-start mt-3">
-            <div className="bg-[#CE2425] rounded-full px-6 py-2 text-white text-sm flex items-center gap-3 justify-center">
+            <button
+              onClick={() =>
+                window.open(
+                  "https://youtube.com/@epicbitevegdelight?si=Lj2FFblQw9F7Ug85",
+                  "_blank"
+                )
+              }
+              className="bg-[#CE2425] rounded-full px-6 py-2 text-white text-sm flex items-center gap-3 justify-center cursor-pointer"
+            >
               <h1>Explore Youtube</h1>
-            </div>
+            </button>
           </div>
         </div>
       </div>

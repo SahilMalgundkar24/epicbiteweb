@@ -142,7 +142,7 @@ export default function RecipesPage() {
         {loading ? (
           <p>Loading recipes...</p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-8">
             {recipes.map((recipe) => (
               <div
                 onClick={() => router.push(`recipes/${recipe.id}`)}

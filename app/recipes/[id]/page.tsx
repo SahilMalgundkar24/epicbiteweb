@@ -103,7 +103,22 @@ export default async function Page({
             {/* Ingredients in two columns */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 text-gray-700">
               {ingredients.length > 0 ? (
-                ingredients.map((ing, idx) => <p key={idx}>• {ing}</p>)
+                ingredients.map((ing, idx) => {
+                  const isBold = ing.trim().startsWith("*");
+                  const text = isBold ? ing.trim().slice(1).trim() : ing;
+
+                  return (
+                    <p key={idx}>
+                      {isBold ? (
+                        <span className="font-semibold text-black">
+                          • {text}
+                        </span>
+                      ) : (
+                        `• ${text}`
+                      )}
+                    </p>
+                  );
+                })
               ) : (
                 <p>No ingredients listed.</p>
               )}
@@ -117,14 +132,8 @@ export default async function Page({
             <div className="space-y-5">
               {procedure.length > 0 ? (
                 procedure.map((inst, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center gap-7 bg-[#f7f7f7] p-6 rounded-xl"
-                  >
-                    <div className="text-4xl text-[#CE2425] font-semibold">
-                      {String(idx + 1).padStart(2, "0")}
-                    </div>
-                    <p className="text-gray-700">{inst}</p>
+                  <div key={idx} className="flex items-center gap-7 px-1">
+                    <h1 className="text-gray-700">{inst}</h1>
                   </div>
                 ))
               ) : (

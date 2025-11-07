@@ -37,13 +37,6 @@ const Testimonial = () => {
               <h1 className="text-xl md:text-2xl text-white font-semibold leading-tight">
                 "Cooking has never been this easy!"
               </h1>
-              <div className="flex items-center mt-3 gap-2">
-                <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center"></div>
-                <div>
-                  <p className="text-white text-sm font-medium">No Cap</p>
-                  <p className="text-white text-xs opacity-75">Home Chef</p>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -80,9 +73,8 @@ const Testimonial = () => {
               </div>
               <div className="flex flex-col">
                 <h3 className="text-gray-800 font-semibold text-xs md:text-sm">
-                  Achievement
+                  2time IFFBA AWARDS in 2022 And 2024
                 </h3>
-                <p className="text-gray-500 text-xs">Cook 3 meals today</p>
               </div>
             </div>
 
@@ -92,9 +84,8 @@ const Testimonial = () => {
               </div>
               <div className="flex flex-col">
                 <h3 className="text-gray-800 font-semibold text-xs md:text-sm">
-                  Live Now
+                  Best home chef in surat 2022
                 </h3>
-                <p className="text-gray-500 text-xs">Chef Sahil Malgundkar</p>
               </div>
             </div>
 
@@ -104,9 +95,8 @@ const Testimonial = () => {
               </div>
               <div className="flex flex-col">
                 <h3 className="text-gray-800 font-semibold text-xs md:text-sm">
-                  Today's Recipe
+                  YouTube recipe creator 2025
                 </h3>
-                <p className="text-gray-500 text-xs">Chicken Chicken Chicken</p>
               </div>
             </div>
 
@@ -116,9 +106,8 @@ const Testimonial = () => {
               </div>
               <div className="flex flex-col">
                 <h3 className="text-gray-800 font-semibold text-xs md:text-sm">
-                  Chicken Chicken
+                  10k+ users across all social platforms
                 </h3>
-                <p className="text-gray-500 text-xs">Chicken Chicken Chicken</p>
               </div>
             </div>
           </div>

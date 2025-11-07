@@ -106,11 +106,6 @@ const PopularRecipes: React.FC = () => {
 
   const onTouchEnd = () => setIsDragging(false);
 
-  const handleRecipeClick = (id: number) => {
-    console.log("Recipe clicked:", id);
-    // You can navigate or show modal here
-  };
-
   return (
     <div className="py-8">
       <h2 className="text-2xl md:text-4xl font-semibold">

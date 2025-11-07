@@ -89,7 +89,6 @@ const Hero = () => {
         className="hidden lg:block absolute top-[50%] right-[15%] w-32 md:w-40 opacity-70"
       />
 
-      {/* ===== Buttons ===== */}
       <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-6 z-10">
         <Link
           href="/recipes"
@@ -101,12 +100,12 @@ const Hero = () => {
           </div>
         </Link>
 
-        <div className="bg-white border border-[#DADADA] rounded-full px-3 py-2 text-sm flex items-center gap-3 justify-center sm:justify-start">
+        {/* <div className="bg-white border border-[#DADADA] rounded-full px-3 py-2 text-sm flex items-center gap-3 justify-center sm:justify-start">
           <h1 className="ml-2">Get Android App</h1>
           <div className="bg-white h-7 w-7 rounded-full flex justify-center items-center">
             <FiDownload size="20" color="#212121" />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* ===== Hero Main Image Section ===== */}
