@@ -90,13 +90,13 @@ export default async function Page({
         </div>
         <div className="text-gray-500 mt-7">{description}</div>
 
-        <div className="mt-3 flex">
+        {/* <div className="mt-3 flex">
           <div className="px-6 py-2 flex justify-center items-center bg-gray-900 text-sm text-white rounded-full">
             Download Recipe PDF
           </div>
-        </div>
+        </div> */}
 
-        <div className="mt-10 w-full lg:w-5/6">
+        <div className="mt-7 w-full lg:w-5/6">
           <div className="border border-gray-200 p-7 rounded-2xl">
             <h1 className="text-2xl font-semibold mb-4">Ingredients</h1>
 
