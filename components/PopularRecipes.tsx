@@ -63,9 +63,15 @@ const PopularRecipes: React.FC = () => {
   };
 
   useEffect(() => {
-    if (!selectedCategory) return;
-    fetchRecipes(selectedCategory.name); // pass name to fetchRecipes
-  }, [selectedCategory]);
+    fetchRecipes("All");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleCategorySelect = (category: Category | null) => {
+    if (!category) return;
+    setSelectedCategory(category);
+    fetchRecipes(category.name);
+  };
 
   const sliderRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -119,7 +125,7 @@ const PopularRecipes: React.FC = () => {
       <Categories
         type="allrecipe"
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        setSelectedCategory={handleCategorySelect}
       />
 
       <div

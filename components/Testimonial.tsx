@@ -35,7 +35,7 @@ const Testimonial = () => {
           <div className="w-full lg:w-1/4 h-48 bg-[#E64041] rounded-lg relative p-4 flex flex-col justify-end">
             <div>
               <h1 className="text-xl md:text-2xl text-white font-semibold leading-tight">
-                "Cooking has never been this easy!"
+                Cooking has never been this easy!
               </h1>
             </div>
           </div>

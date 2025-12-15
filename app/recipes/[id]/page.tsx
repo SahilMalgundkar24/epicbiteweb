@@ -149,7 +149,7 @@ export default async function Page({
               href={youtubeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-3 bg-[#CE2425] rounded-lg flex justify-center items-center gap-4 hover:bg-[#b91d1e] transition"
+              className="w-full py-3 bg-[#CE2425] rounded-lg flex justify-center items-center gap-4 hover:bg-[#b91d1e] transition mt-5"
             >
               <h1 className="text-white text-center">Watch on YouTube</h1>
               <FaYoutube color="white" size={28} />

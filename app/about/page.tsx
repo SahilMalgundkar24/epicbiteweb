@@ -52,7 +52,7 @@ const page = () => {
 
         <p className="text-gray-600 leading-7 text-base md:text-lg">
           Want to learn or grow? Join our WhatsApp group by dropping us a
-          message. We'd love to welcome you!
+          message. We&apos;d love to welcome you!
         </p>
 
         <a
