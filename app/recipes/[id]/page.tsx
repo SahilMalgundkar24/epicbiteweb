@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import React from "react";
 import supabase from "@/lib/supabase";
 import Footer from "@/components/Footer";
+import { FaYoutube } from "react-icons/fa6";
 
 export default async function Page({
   params,
@@ -41,6 +42,7 @@ export default async function Page({
   const description = data.description ?? "";
   const image = data.image_url ?? "/images/temp.jpg";
   const chef = data.chef_name ?? "Chef";
+  const youtubeUrl = data.youtube_url ?? "";
 
   // Support ingredients/instructions stored as arrays or newline-separated strings
   const parseMaybeArray = (v?: string | string[]) => {
@@ -141,6 +143,18 @@ export default async function Page({
               )}
             </div>
           </div>
+
+          {youtubeUrl && (
+            <a
+              href={youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full py-3 bg-[#CE2425] rounded-lg flex justify-center items-center gap-4 hover:bg-[#b91d1e] transition"
+            >
+              <h1 className="text-white text-center">Watch on YouTube</h1>
+              <FaYoutube color="white" size={28} />
+            </a>
+          )}
         </div>
         <Footer />
       </div>
