@@ -93,7 +93,7 @@ export default async function Page({
         </div>
         <div className="text-gray-500 mt-7">{description}</div>
 
-        <div className="mt-3 flex">
+        {/* <div className="mt-3 flex">
           <DownloadRecipeButton
             recipeData={{
               title,
@@ -105,7 +105,7 @@ export default async function Page({
               youtubeUrl,
             }}
           />
-        </div>
+        </div> */}
 
         <div className="mt-7 w-full lg:w-5/6">
           <div className="border border-gray-200 p-7 rounded-2xl">
