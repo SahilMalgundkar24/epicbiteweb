@@ -21,6 +21,7 @@ export default function DownloadRecipeButton({
   recipeData,
 }: DownloadRecipeButtonProps) {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const generatePDF = async () => {
     setIsGenerating(true);
@@ -229,6 +230,8 @@ export default function DownloadRecipeButton({
 
       // Save the PDF
       pdf.save(`${recipeData.title.replace(/[^a-z0-9]/gi, "_")}_recipe.pdf`);
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
     } catch (error) {
       console.error("Error generating PDF:", error);
       alert("Failed to generate PDF. Please try again.");
@@ -238,12 +241,20 @@ export default function DownloadRecipeButton({
   };
 
   return (
-    <button
-      onClick={generatePDF}
-      disabled={isGenerating}
-      className="px-6 py-2 flex justify-center items-center bg-gray-900 text-sm text-white rounded-full hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
-    >
-      {isGenerating ? "Generating PDF..." : "Download Recipe PDF"}
-    </button>
+    <>
+      <button
+        onClick={generatePDF}
+        disabled={isGenerating}
+        className="px-6 py-2 flex justify-center items-center bg-gray-900 text-sm text-white rounded-full hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {isGenerating ? "Generating PDF..." : "Download Recipe PDF"}
+      </button>
+
+      {showSuccess && (
+        <div className="fixed bottom-6 right-6 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm animate-fade-in">
+          📄 Recipe PDF downloaded
+        </div>
+      )}
+    </>
   );
 }
