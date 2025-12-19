@@ -79,7 +79,7 @@ const page = () => {
           <div className="flex items-center gap-4">
             <BsInstagram size={20} />
             <a
-              href="https://www.instagram.com/epicbite_official/"
+              href="https://www.instagram.com/epicbite_official"
               className="text-[#1877F3] text-lg hover:underline"
               target="_blank"
             >
@@ -90,11 +90,11 @@ const page = () => {
           <div className="flex items-center gap-4">
             <BsInstagram size={20} />
             <a
-              href="https://www.instagram.com/epicbite.sweetdelight/"
+              href="https://www.instagram.com/epicbite.vegdelight"
               className="text-[#1877F3] text-lg hover:underline"
               target="_blank"
             >
-              @epicbite.sweetdelight
+              @epicbite.vegdelight
             </a>
           </div>
 
@@ -102,7 +102,7 @@ const page = () => {
           <div className="flex items-center gap-4">
             <FaYoutube size={20} />
             <a
-              href="https://www.youtube.com/@theepicbite"
+              href="https://youtube.com/@theepicbite?si=2-7AEFmEokboZ0yi"
               className="text-red-600 text-lg hover:underline"
               target="_blank"
             >
@@ -113,11 +113,11 @@ const page = () => {
           <div className="flex items-center gap-4">
             <FaYoutube size={20} />
             <a
-              href="https://www.youtube.com/@epicbitesweetdelight"
+              href="https://youtube.com/@epicbitevegdelight?si=-3-Q0p0j509Dc7_T"
               className="text-red-600 text-lg hover:underline"
               target="_blank"
             >
-              @epicbitesweetdelight
+              @epicbitevegdelight
             </a>
           </div>
         </div>
