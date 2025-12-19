@@ -4,6 +4,7 @@ import React from "react";
 import supabase from "@/lib/supabase";
 import Footer from "@/components/Footer";
 import { FaYoutube } from "react-icons/fa6";
+import DownloadRecipeButton from "@/components/DownloadRecipeButton";
 
 export default async function Page({
   params,
@@ -92,11 +93,19 @@ export default async function Page({
         </div>
         <div className="text-gray-500 mt-7">{description}</div>
 
-        {/* <div className="mt-3 flex">
-          <div className="px-6 py-2 flex justify-center items-center bg-gray-900 text-sm text-white rounded-full">
-            Download Recipe PDF
-          </div>
-        </div> */}
+        <div className="mt-3 flex">
+          <DownloadRecipeButton
+            recipeData={{
+              title,
+              description,
+              image,
+              chef,
+              ingredients,
+              procedure,
+              youtubeUrl,
+            }}
+          />
+        </div>
 
         <div className="mt-7 w-full lg:w-5/6">
           <div className="border border-gray-200 p-7 rounded-2xl">
