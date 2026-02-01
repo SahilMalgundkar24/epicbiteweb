@@ -44,6 +44,7 @@ export default async function Page({
   const image = data.image_url ?? "/images/temp.jpg";
   const chef = data.chef_name ?? "Chef";
   const youtubeUrl = data.youtube_url ?? "";
+  const pdfUrl = data.pdf_url ?? "";
 
   // Support ingredients/instructions stored as arrays or newline-separated strings
   const parseMaybeArray = (v?: string | string[]) => {
@@ -62,10 +63,10 @@ export default async function Page({
   };
 
   const ingredients = parseMaybeArray(
-    data.ingredients as unknown as string | string[]
+    data.ingredients as unknown as string | string[],
   );
   const procedure = parseMaybeArray(
-    data.procedure as unknown as string | string[]
+    data.procedure as unknown as string | string[],
   );
 
   return (
@@ -106,6 +107,20 @@ export default async function Page({
             }}
           />
         </div> */}
+
+        {pdfUrl && (
+          <div className="mt-4 flex">
+            <a
+              href={pdfUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full 
+                 bg-gray-900 text-white hover:bg-gray-800 transition"
+            >
+              View Recipe PDF
+            </a>
+          </div>
+        )}
 
         <div className="mt-7 w-full lg:w-5/6">
           <div className="border border-gray-200 p-7 rounded-2xl">
