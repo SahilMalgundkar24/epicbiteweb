@@ -148,6 +148,12 @@ const Navbar = () => {
             Explore
           </Link>
           <Link
+            href="/pdf-recipes"
+            className="text-sm hover:text-[#CE2425] cursor-pointer transition-colors"
+          >
+            More Recipes
+          </Link>
+          <Link
             href="/about"
             className="text-sm hover:text-[#CE2425] cursor-pointer transition-colors"
           >
@@ -243,6 +249,12 @@ const Navbar = () => {
               className=" hover:text-[#CE2425] cursor-pointer transition-colors py-2"
             >
               Explore
+            </Link>
+            <Link
+              href="/pdf-recipes"
+              className=" hover:text-[#CE2425] cursor-pointer transition-colors py-2"
+            >
+              More Recipes
             </Link>
             <Link
               href="/about"

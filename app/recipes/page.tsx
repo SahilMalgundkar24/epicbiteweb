@@ -6,7 +6,9 @@ import SubCategoryDropdown from "@/components/reusable/SubCategoryDropdown";
 import supabase from "@/lib/supabase";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Footer from "@/components/Footer";
+import { FaFilePdf } from "react-icons/fa6";
 
 interface Recipe {
   id: number;
@@ -117,9 +119,16 @@ export default function RecipesPage() {
     <div className="px-5 md:px-10 lg:px-16">
       <Navbar />
       <div className="py-3 lg:py-8">
-        <h1 className="text-2xl md:text-4xl font-medium mb-4">
-          Explore Recipes
-        </h1>
+        <div className="flex items-center justify-between mb-4 gap-4 flex-wrap">
+          <h1 className="text-2xl md:text-4xl font-medium">Explore Recipes</h1>
+          <Link
+            href="/pdf-recipes"
+            className="flex items-center gap-2 bg-[#F7F7F7] hover:bg-red-50 hover:border-[#CE2425] border border-transparent text-sm font-medium px-4 py-2 rounded-full transition-all text-gray-700 hover:text-[#CE2425] shrink-0"
+          >
+            <FaFilePdf size={15} className="text-[#CE2425]" />
+            PDF Recipes
+          </Link>
+        </div>
         <div className="mb-5">
           <Categories
             type="allrecipe"
