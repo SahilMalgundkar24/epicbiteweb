@@ -40,7 +40,7 @@ export default function RecipesPage() {
   const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
   const [loadingSubCategories, setLoadingSubCategories] = useState(false);
   const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
-    null
+    null,
   );
 
   const fetchSubCategories = async (categoryId: number) => {
@@ -126,7 +126,7 @@ export default function RecipesPage() {
             className="flex items-center gap-2 bg-[#F7F7F7] hover:bg-red-50 hover:border-[#CE2425] border border-transparent text-sm font-medium px-4 py-2 rounded-full transition-all text-gray-700 hover:text-[#CE2425] shrink-0"
           >
             <FaFilePdf size={15} className="text-[#CE2425]" />
-            PDF Recipes
+            Recipe PDFs
           </Link>
         </div>
         <div className="mb-5">
