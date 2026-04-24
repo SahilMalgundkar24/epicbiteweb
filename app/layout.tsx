@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
         className={`${poppins.className}  bg-[url('/images/HomepageBg.png')] bg-cover bg-no-repeat`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
