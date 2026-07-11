@@ -1,9 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import { FiLoader } from "react-icons/fi";
 import Categories from "./reusable/Categories";
 import supabase from "@/lib/supabase";
-import { useRouter } from "next/navigation";
+import PopularRecipesSkeleton from "./reusable/PopularRecipesSkeleton";
+import RecipeImage from "./reusable/RecipeImage";
+import { useRecipeNavigation } from "@/hooks/useRecipeNavigation";
 
 interface Recipe {
   id: number;
@@ -17,7 +19,8 @@ interface Category {
 }
 
 const PopularRecipes: React.FC = () => {
-  const router = useRouter();
+  const { navigateToRecipe, isNavigating, navigatingTo } =
+    useRecipeNavigation();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>({
     id: 0,
     name: "All",
@@ -63,8 +66,8 @@ const PopularRecipes: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchRecipes("All");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial data fetch
+    void fetchRecipes("All");
   }, []);
 
   const handleCategorySelect = (category: Category | null) => {
@@ -89,13 +92,12 @@ const PopularRecipes: React.FC = () => {
     if (!isDragging || !sliderRef.current) return;
     e.preventDefault();
     const x = e.pageX - sliderRef.current.offsetLeft;
-    const walk = (x - startX) * 1; // adjust scroll speed
+    const walk = (x - startX) * 1;
     sliderRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const onMouseUpOrLeave = () => setIsDragging(false);
 
-  // Touch events for mobile
   const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!sliderRef.current) return;
     setIsDragging(true);
@@ -106,11 +108,16 @@ const PopularRecipes: React.FC = () => {
   const onTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!isDragging || !sliderRef.current) return;
     const x = e.touches[0].pageX - sliderRef.current.offsetLeft;
-    const walk = (x - startX) * 1; // adjust scroll speed
+    const walk = (x - startX) * 1;
     sliderRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const onTouchEnd = () => setIsDragging(false);
+
+  const handleRecipeClick = (id: number) => {
+    if (isNavigating) return;
+    navigateToRecipe(id);
+  };
 
   return (
     <div className="py-8">
@@ -140,29 +147,42 @@ const PopularRecipes: React.FC = () => {
         className="w-full py-2 mt-5 flex gap-5 overflow-x-auto scrollbar-hide"
       >
         {loading ? (
-          <>
-            <div className="w-1/4 shrink-0 select-none">
-              <div className="w-full h-80 bg-gray-200 rounded-lg"></div>
-
-              <div className=" w-full h-4 bg-gray-200"></div>
-            </div>
-          </>
+          <PopularRecipesSkeleton count={4} />
         ) : recipes.length > 0 ? (
-          recipes.map((recipe) => (
-            <div
-              onClick={() => router.push(`recipes/${recipe.id}`)}
-              key={recipe.id}
-              className="w-[90%] lg:w-1/4 shrink-0 select-none cursor-pointer"
-            >
-              <img
-                src={recipe.image_url}
-                alt={recipe.title}
-                className="w-full h-64 lg:h-80 bg-gray-200 rounded-lg object-cover pointer-events-none"
-              />
-              <h1 className="text-lg font-semibold">{recipe.title}</h1>
-              <h1 className="text-sm text-black/50">by Sadika Inamdar</h1>
-            </div>
-          ))
+          recipes.map((recipe) => {
+            const isLoadingThis = navigatingTo === recipe.id;
+
+            return (
+              <div
+                onClick={() => handleRecipeClick(recipe.id)}
+                key={recipe.id}
+                className={`w-[90%] lg:w-1/4 shrink-0 select-none cursor-pointer relative ${
+                  isLoadingThis ? "pointer-events-none" : ""
+                }`}
+              >
+                <div className="relative">
+                  <RecipeImage
+                    src={recipe.image_url}
+                    alt={recipe.title}
+                    sizes="(max-width: 1024px) 90vw, 25vw"
+                    imageClassName={`rounded-lg object-cover bg-gray-200 pointer-events-none transition-opacity ${
+                      isLoadingThis ? "opacity-50" : ""
+                    }`}
+                  />
+                  {isLoadingThis && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <FiLoader
+                        size={28}
+                        className="animate-spin text-[#CE2425]"
+                      />
+                    </div>
+                  )}
+                </div>
+                <h1 className="text-lg font-semibold">{recipe.title}</h1>
+                <h1 className="text-sm text-black/50">by Sadika Inamdar</h1>
+              </div>
+            );
+          })
         ) : (
           <p>No recipes found for this category.</p>
         )}

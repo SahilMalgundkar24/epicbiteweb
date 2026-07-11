@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 
 const Youtube = () => {
   return (
@@ -18,7 +19,7 @@ const Youtube = () => {
               onClick={() =>
                 window.open(
                   "https://youtube.com/@epicbitevegdelight?si=Lj2FFblQw9F7Ug85",
-                  "_blank"
+                  "_blank",
                 )
               }
               className="bg-[#CE2425] rounded-full px-6 py-2 text-white text-sm flex items-center gap-3 justify-center cursor-pointer"
@@ -30,24 +31,26 @@ const Youtube = () => {
       </div>
 
       <div className="flex lg:flex-row flex-col justify-between items-center gap-5">
-        <div className="w-full lg:w-1/2 h-120 bg-amber-200 rounded-lg">
-          <img
+        <div className="relative w-full lg:w-1/2 h-120 bg-amber-200 rounded-lg overflow-hidden">
+          <Image
             src="/images/youtubeImage.png"
-            className="w-full h-120 object-cover"
+            alt="YouTube channel preview"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
           />
         </div>
-        <div className="w-full lg:w-1/2 h-120 relative rounded-lg overflow-hidden">
-          {/* Image */}
-          <img
+        <div className="relative w-full lg:w-1/2 h-120 rounded-lg overflow-hidden">
+          <Image
             src="/images/khala.png"
             alt="Khala"
-            className="w-full h-full object-cover"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
           />
 
-          {/* Bottom Overlay */}
           <div className="absolute inset-0 bg-linear-to-b from-transparent to-[#CE2425]/50"></div>
 
-          {/* Text on Overlay */}
           <div className="absolute bottom-0 left-0 p-6 text-white flex justify-between gap-12">
             <div className="w-1/2">
               <h2 className="lg:text-5xl text-3xl font-semibold">100+</h2>

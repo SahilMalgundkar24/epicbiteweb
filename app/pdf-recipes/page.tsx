@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import supabase from "@/lib/supabase";
+import LoadingSpinner from "@/components/reusable/LoadingSpinner";
 import { FaFilePdf } from "react-icons/fa6";
 
 interface PdfRecipe {
@@ -84,6 +85,9 @@ export default function PdfRecipesPage() {
                 className="h-16 bg-gray-100 rounded-xl animate-pulse"
               />
             ))}
+            <div className="flex justify-center pt-6">
+              <LoadingSpinner label="Loading recipes" />
+            </div>
           </div>
         ) : recipes.length === 0 ? (
           <p className="text-gray-500 text-center py-16">No recipes found.</p>

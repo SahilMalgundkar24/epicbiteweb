@@ -1,6 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 import Navbar from "@/components/Navbar";
 import React from "react";
+import Image from "next/image";
 import supabase from "@/lib/supabase";
 import Footer from "@/components/Footer";
 import { FaYoutube } from "react-icons/fa6";
@@ -75,11 +75,13 @@ export default async function Page({
         <Navbar />
 
         <div className="relative w-full h-80 rounded-xl overflow-hidden">
-          {/* Image */}
-          <img
+          <Image
             src={image}
             alt={title}
-            className="w-full h-full object-cover rounded-xl overflow-hidden"
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover rounded-xl"
           />
 
           {/* Black overlay */}

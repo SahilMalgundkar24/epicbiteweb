@@ -1,9 +1,11 @@
 "use client";
-import Link from "next/link";
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { FiSearch, FiMenu, FiX } from "react-icons/fi";
 import supabase from "@/lib/supabase";
-import { useRouter } from "next/navigation";
+import NavLink from "@/components/reusable/NavLink";
+import LoadingSpinner from "@/components/reusable/LoadingSpinner";
+import { useRecipeNavigation } from "@/hooks/useRecipeNavigation";
 
 interface Recipe {
   id: number;
@@ -12,14 +14,14 @@ interface Recipe {
 }
 
 const Navbar = () => {
-  const router = useRouter();
+  const { navigateToRecipe } = useRecipeNavigation();
 
   const handleSelectRecipe = (id: number) => {
     setShowMobileSearch(false);
     setSearchQuery("");
     setSearchResults([]);
     document.body.style.overflow = "auto";
-    router.push(`/recipes/${id}`);
+    navigateToRecipe(id);
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -107,15 +109,19 @@ const Navbar = () => {
   };
   const toggleMobileMenu = () => {
     if (isMobileMenuOpen) {
-      // Trigger close animation
       setIsAnimating(true);
       setTimeout(() => {
         setIsMobileMenuOpen(false);
         setIsAnimating(false);
-      }, 400); // match animation duration
+      }, 400);
     } else {
       setIsMobileMenuOpen(true);
     }
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    setIsAnimating(false);
   };
 
   useEffect(() => {
@@ -129,39 +135,45 @@ const Navbar = () => {
     <div className="py-3 lg:py-2">
       <div className="flex items-center justify-between">
         <div className="w-auto md:w-1/3">
-          <Link href="/">
-            <img src="/images/logo.png" alt="Logo" className="h-12 md:h-auto" />
-          </Link>
+          <NavLink href="/">
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={140}
+              height={48}
+              className="h-12 w-auto"
+              priority
+            />
+          </NavLink>
         </div>
 
         <div className="hidden md:flex w-1/3 justify-center items-center gap-7">
-          <Link
+          <NavLink
             href="/"
             className="text-sm hover:text-[#CE2425] cursor-pointer transition-colors"
           >
             Home
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             href="/recipes"
             className="text-sm hover:text-[#CE2425] cursor-pointer transition-colors"
           >
             Explore
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             href="/pdf-recipes"
             className="text-sm hover:text-[#CE2425] cursor-pointer transition-colors"
           >
             More Recipes
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             href="/about"
             className="text-sm hover:text-[#CE2425] cursor-pointer transition-colors"
           >
             About
-          </Link>
+          </NavLink>
         </div>
 
-        {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-3">
           <button
             onClick={openMobileSearch}
@@ -195,9 +207,9 @@ const Navbar = () => {
           {showModal && (
             <div className="absolute top-12 right-0 w-full bg-white shadow-xl rounded-xl p-4 z-50 max-h-80 overflow-y-auto">
               {isSearching && (
-                <p className="text-gray-500 text-sm text-center">
-                  Searching...
-                </p>
+                <div className="py-6">
+                  <LoadingSpinner size={20} label="Searching" />
+                </div>
               )}
 
               {!isSearching &&
@@ -208,26 +220,28 @@ const Navbar = () => {
                   </p>
                 )}
 
-              {searchResults.map((recipe) => (
-                <div
-                  key={recipe.id}
-                  className="flex items-center gap-4 p-2 cursor-pointer hover:bg-gray-100 rounded-lg"
-                  onClick={() => handleSelectRecipe(recipe.id)}
-                >
-                  <img
+              {!isSearching &&
+                searchResults.map((recipe) => (
+                  <div
+                    key={recipe.id}
+                    className="flex items-center gap-4 p-2 cursor-pointer hover:bg-gray-100 rounded-lg"
+                    onClick={() => handleSelectRecipe(recipe.id)}
+                  >
+                  <Image
                     src={recipe.image_url}
                     alt={recipe.title}
-                    className="w-12 h-12 rounded-md object-cover"
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 rounded-md object-cover shrink-0"
                   />
-                  <span className="text-black font-medium">{recipe.title}</span>
-                </div>
-              ))}
+                    <span className="text-black font-medium">{recipe.title}</span>
+                  </div>
+                ))}
             </div>
           )}
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
           className={`md:hidden px-10 absolute top-16 left-0 right-0 bg-white/40 backdrop-blur-lg z-50 rounded-b-xl h-full
@@ -238,30 +252,34 @@ const Navbar = () => {
           }`}
         >
           <div className="flex flex-col items-center py-4 space-y-4">
-            <Link
+            <NavLink
               href="/"
-              className=" hover:text-[#CE2425] cursor-pointer transition-colors py-2"
+              onClick={closeMobileMenu}
+              className="hover:text-[#CE2425] cursor-pointer transition-colors py-2"
             >
               Home
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/recipes"
-              className=" hover:text-[#CE2425] cursor-pointer transition-colors py-2"
+              onClick={closeMobileMenu}
+              className="hover:text-[#CE2425] cursor-pointer transition-colors py-2"
             >
               Explore
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/pdf-recipes"
-              className=" hover:text-[#CE2425] cursor-pointer transition-colors py-2"
+              onClick={closeMobileMenu}
+              className="hover:text-[#CE2425] cursor-pointer transition-colors py-2"
             >
               More Recipes
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               href="/about"
-              className=" hover:text-[#CE2425] cursor-pointer transition-colors py-2"
+              onClick={closeMobileMenu}
+              className="hover:text-[#CE2425] cursor-pointer transition-colors py-2"
             >
               About
-            </Link>
+            </NavLink>
           </div>
         </div>
       )}
@@ -269,7 +287,6 @@ const Navbar = () => {
       {showMobileSearch && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex justify-center items-start pt-20 px-4">
           <div className="bg-white w-full max-w-md rounded-xl pt-10 px-4 shadow-xl relative">
-            {/* Close button */}
             <button
               onClick={closeMobileSearch}
               className="absolute top-3 right-4 text-gray-500 hover:text-black"
@@ -277,7 +294,6 @@ const Navbar = () => {
               <FiX size={22} />
             </button>
 
-            {/* Input */}
             <div className="flex items-center gap-3 bg-[#F7F7F7] px-4 py-2 rounded-full">
               <FiSearch color="#9B9B9B" size={18} />
               <input
@@ -289,12 +305,11 @@ const Navbar = () => {
               />
             </div>
 
-            {/* Results */}
             <div className="mt-4 max-h-80 overflow-y-auto">
               {isSearching && (
-                <p className="text-gray-500 text-sm text-center">
-                  Searching...
-                </p>
+                <div className="py-6">
+                  <LoadingSpinner size={20} label="Searching" />
+                </div>
               )}
 
               {!isSearching &&
@@ -305,20 +320,23 @@ const Navbar = () => {
                   </p>
                 )}
 
-              {searchResults.map((recipe) => (
-                <div
-                  key={recipe.id}
-                  className="flex items-center gap-4 p-2 cursor-pointer hover:bg-gray-100 rounded-lg"
-                  onClick={() => handleSelectRecipe(recipe.id)}
-                >
-                  <img
+              {!isSearching &&
+                searchResults.map((recipe) => (
+                  <div
+                    key={recipe.id}
+                    className="flex items-center gap-4 p-2 cursor-pointer hover:bg-gray-100 rounded-lg"
+                    onClick={() => handleSelectRecipe(recipe.id)}
+                  >
+                  <Image
                     src={recipe.image_url}
                     alt={recipe.title}
-                    className="w-12 h-12 rounded-md object-cover"
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 rounded-md object-cover shrink-0"
                   />
-                  <span className="text-black font-medium">{recipe.title}</span>
-                </div>
-              ))}
+                    <span className="text-black font-medium">{recipe.title}</span>
+                  </div>
+                ))}
             </div>
           </div>
         </div>

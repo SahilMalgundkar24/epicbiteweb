@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import supabase from "@/lib/supabase";
+import CategoryPillsSkeleton from "./CategoryPillsSkeleton";
 
 interface Category {
   id: number;
@@ -22,7 +23,6 @@ const Categories = ({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        console.log("Fetching categories...");
         const { data, error } = await supabase
           .from("categories")
           .select("id, name, image_url");
@@ -56,20 +56,23 @@ const Categories = ({
         >
           All
         </div>
-        {loadingCategories && <p>Loading categories...</p>}
-        {categories.map((category) => (
-          <div
-            key={category.id}
-            onClick={() => setSelectedCategory(category)}
-            className={`py-2 px-6 rounded-full text-sm cursor-pointer ${
-              selectedCategory?.name === category.name
-                ? "bg-[#CE2425] text-white"
-                : "bg-[#F7F7F7] text-black"
-            }`}
-          >
-            {category.name}
-          </div>
-        ))}
+        {loadingCategories ? (
+          <CategoryPillsSkeleton count={5} />
+        ) : (
+          categories.map((category) => (
+            <div
+              key={category.id}
+              onClick={() => setSelectedCategory(category)}
+              className={`py-2 px-6 rounded-full text-sm cursor-pointer ${
+                selectedCategory?.name === category.name
+                  ? "bg-[#CE2425] text-white"
+                  : "bg-[#F7F7F7] text-black"
+              }`}
+            >
+              {category.name}
+            </div>
+          ))
+        )}
       </div>
       {type !== "allrecipe" && (
         <button className="hover:underline cursor-pointer">View All</button>

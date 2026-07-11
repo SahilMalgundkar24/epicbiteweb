@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface SubCategory {
   id: number;
@@ -20,7 +21,15 @@ const SubCategoryDropdown: React.FC<SubCategoryDropdownProps> = ({
   setSelectedSubCategory,
   loading,
 }) => {
-  if (loading) return <p>Loading subcategories...</p>;
+  if (loading) {
+    return (
+      <div className="flex items-center gap-3">
+        <div className="h-9 w-44 bg-gray-200 rounded-full animate-pulse" />
+        <LoadingSpinner size={18} />
+      </div>
+    );
+  }
+
   if (subCategories.length === 0) return null;
 
   return (

@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import PopularRecipes from "@/components/PopularRecipes";
 import Testimonial from "@/components/Testimonial";
 import Youtube from "@/components/Youtube";
-import Image from "next/image";
 
 export default function Home() {
   return (
