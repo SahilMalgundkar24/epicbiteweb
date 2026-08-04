@@ -4,12 +4,13 @@ import ExploreRecipesLink from "@/components/ExploreRecipesLink";
 
 const Hero = () => {
   return (
-    <div className="relative w-full flex flex-col items-center justify-center h-full overflow-hidden">
+    <div className="relative w-full flex flex-col items-center justify-center h-full overflow-hidden select-none">
       <Image
         src="/images/herobg1.png"
         alt=""
         width={160}
         height={160}
+        draggable={false}
         className="hidden lg:block absolute top-6 left-10 w-32 md:w-40 opacity-90"
       />
       <Image
@@ -34,7 +35,7 @@ const Hero = () => {
         className="hidden lg:block absolute top-24 left-1/4 w-32 md:w-48 opacity-80"
       />
 
-      <div className="mt-12 w-full flex justify-center items-center mb-3 z-10">
+      <div className="mt-12 w-full flex justify-center items-center mb-3 z-10 select-text">
         <div className="px-3 py-1 border border-gray-300 rounded-full flex items-center gap-2 bg-white/70 backdrop-blur-sm">
           <div className="flex -space-x-2">
             <Image
@@ -65,7 +66,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="relative z-10 text-center px-4">
+      <div className="relative z-10 text-center px-4 select-text">
         <h1 className="text-4xl md:text-5xl font-medium leading-[1.1]">
           Your Kitchen, <br />
           Your <span className="text-[#CE2425]">Next Recipe</span>
@@ -105,7 +106,7 @@ const Hero = () => {
         className="hidden lg:block absolute top-[50%] right-[15%] w-32 md:w-40 opacity-70"
       />
 
-      <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-6 z-10">
+      <div className="flex flex-col sm:flex-row gap-4 md:gap-7 mt-6 z-10 select-text">
         <ExploreRecipesLink />
       </div>
 
