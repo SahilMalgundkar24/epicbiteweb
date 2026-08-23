@@ -24,18 +24,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="google-adsense-account"
+          content="ca-pub-4397873588107078"
+        ></meta>
+      </head>
       <body
         className={`${poppins.className}  bg-[url('/images/HomepageBg.png')] bg-cover bg-no-repeat`}
       >
-        <NavigationProvider>
-          {children}
-        </NavigationProvider>
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4397873588107078"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        <NavigationProvider>{children}</NavigationProvider>
         <Analytics />
       </body>
     </html>
