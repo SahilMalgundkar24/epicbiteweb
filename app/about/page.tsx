@@ -8,7 +8,7 @@ import { createMetadata } from "@/lib/metadata";
 export const metadata: Metadata = createMetadata({
   title: "About Epic Bite",
   description:
-    "Learn about Epic Bite, our homemade recipe journey since 2015, cooking classes, and community for veg and non-veg home cooking.",
+    "Learn about Epic Bite, our journey, cooking classes, and community for veg and non-veg home cooking.",
   path: "/about",
 });
 
