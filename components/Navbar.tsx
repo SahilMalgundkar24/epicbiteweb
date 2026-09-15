@@ -137,7 +137,7 @@ const Navbar = () => {
         <div className="w-auto md:w-1/3">
           <NavLink href="/">
             <Image
-              src="/images/logo.png"
+              src="/images/epicbitelogo.svg"
               alt="Logo"
               width={140}
               height={48}
@@ -227,14 +227,16 @@ const Navbar = () => {
                     className="flex items-center gap-4 p-2 cursor-pointer hover:bg-gray-100 rounded-lg"
                     onClick={() => handleSelectRecipe(recipe.id)}
                   >
-                  <Image
-                    src={recipe.image_url}
-                    alt={recipe.title}
-                    width={48}
-                    height={48}
-                    className="w-12 h-12 rounded-md object-cover shrink-0"
-                  />
-                    <span className="text-black font-medium">{recipe.title}</span>
+                    <Image
+                      src={recipe.image_url}
+                      alt={recipe.title}
+                      width={48}
+                      height={48}
+                      className="w-12 h-12 rounded-md object-cover shrink-0"
+                    />
+                    <span className="text-black font-medium">
+                      {recipe.title}
+                    </span>
                   </div>
                 ))}
             </div>
@@ -327,14 +329,16 @@ const Navbar = () => {
                     className="flex items-center gap-4 p-2 cursor-pointer hover:bg-gray-100 rounded-lg"
                     onClick={() => handleSelectRecipe(recipe.id)}
                   >
-                  <Image
-                    src={recipe.image_url}
-                    alt={recipe.title}
-                    width={48}
-                    height={48}
-                    className="w-12 h-12 rounded-md object-cover shrink-0"
-                  />
-                    <span className="text-black font-medium">{recipe.title}</span>
+                    <Image
+                      src={recipe.image_url}
+                      alt={recipe.title}
+                      width={48}
+                      height={48}
+                      className="w-12 h-12 rounded-md object-cover shrink-0"
+                    />
+                    <span className="text-black font-medium">
+                      {recipe.title}
+                    </span>
                   </div>
                 ))}
             </div>

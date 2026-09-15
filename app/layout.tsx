@@ -1,9 +1,9 @@
 import { Poppins } from "next/font/google";
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { NavigationProvider } from "@/components/NavigationProvider";
+import { createMetadata } from "@/lib/metadata";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -13,8 +13,11 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Epic Bite",
-  description: "Homemade Recipes",
+  ...createMetadata(),
+  title: {
+    default: "Epic Bite",
+    template: "%s | Epic Bite",
+  },
 };
 
 export default function RootLayout({
