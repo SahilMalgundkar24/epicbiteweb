@@ -17,10 +17,7 @@ const Youtube = () => {
           <div className="flex w-full justify-start mt-3">
             <button
               onClick={() =>
-                window.open(
-                  "https://youtube.com/@epicbitevegdelight?si=Lj2FFblQw9F7Ug85",
-                  "_blank",
-                )
+                window.open("https://www.youtube.com/@myepicbite", "_blank")
               }
               className="bg-[#CE2425] rounded-full px-6 py-2 text-white text-sm flex items-center gap-3 justify-center cursor-pointer"
             >
